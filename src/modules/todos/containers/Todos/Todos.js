@@ -48,11 +48,13 @@ export class Todos extends Component {
     render() {
 
         const { todos, loadingAll } = this.props
-        const plannedTodos = todos.filter( todo => todo.status === 'planned')
-        const inProgressTodos = todos.filter( todo => todo.status === 'inProgress')
-        const doneTodos = todos.filter( todo => todo.status === 'done')
 
-        if( loadingAll) {
+        if( loadingAll && Array.isArray(todos) && todos.length > 0) {
+
+            const plannedTodos = todos.filter( todo => todo.status === 'planned')
+            const inProgressTodos = todos.filter( todo => todo.status === 'inProgress')
+            const doneTodos = todos.filter( todo => todo.status === 'done')
+
             return (
                 <div className="uk-grid uk-child-width-expand@s">
                     <div>
@@ -88,8 +90,11 @@ export class Todos extends Component {
                 </div>
             )
         }
-        else {
+        else if( !loadingAll) {
             return (<h3 className="uk-text-center">Loading...</h3>)
+        }
+        else {
+            return (<h3 className="uk-text-center">Any todos in database</h3>)
         }
     }
 
